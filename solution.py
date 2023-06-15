@@ -1,4 +1,4 @@
-from itertools import product
+from itertools import product, zip_longest
 
 
 
@@ -6,10 +6,10 @@ def solution(sequence: str, target: int, signs: list) -> str:
     sign_chains = product(signs, repeat=len(sequence) - 1)
     for chain in sign_chains:
         s = ""
-        for num, sign in zip(sequence, chain):
+        for num, sign in zip_longest(sequence, chain, fillvalue=''):
             s += num
             s += sign
-        s += "0"
+
         if eval(s) == target:
             return s
     return 0
@@ -18,7 +18,7 @@ def solution(sequence: str, target: int, signs: list) -> str:
 
 
 def main():
-    sequence = "9876543210"
+    sequence = "9876543211"
     target = 200
     signs = ['', '-', '+']
     print(solution(sequence, target, signs), "=", target)
